@@ -38,25 +38,22 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
     allAnimals = jsonData.map(preapareObject);
     HTML.filtersInputs.forEach(filterValue => {
+        const clickedSort = filterValue.dataset.filter.toLowerCase();
         filterValue.onclick = function () {
-
+            const filteredAnimals = allAnimals.filter(animal => animal.type === clickedSort);
+            displayList(filteredAnimals);
         }
-
-    })
+    });
 
 
     HTML.sortInputsValues.forEach(sortValue => {
         sortValue.onclick = function () {
             const clickedSort = sortValue.dataset.sort.toLowerCase();
             allAnimals.sort((a, b) => (a.sclickedSort > b.sclickedSort) ? 1 : -1)
-            console.log(allAnimals);
             displayList(allAnimals);
         }
-
-
-    })
+    });
     displayList(allAnimals);
-
     // TODO: This might not be the function we want to call first
 }
 
