@@ -40,8 +40,14 @@ function prepareObjects(jsonData) {
     HTML.filtersInputs.forEach(filterValue => {
         const clickedSort = filterValue.dataset.filter.toLowerCase();
         filterValue.onclick = function () {
-            const filteredAnimals = allAnimals.filter(animal => animal.type === clickedSort);
-            displayList(filteredAnimals);
+            if (clickedSort === "*") {
+                displayList(allAnimals);
+
+            } else {
+                const filteredAnimals = allAnimals.filter(animal => animal.type === clickedSort);
+                displayList(filteredAnimals);
+            }
+
         }
     });
 
@@ -54,7 +60,6 @@ function prepareObjects(jsonData) {
         }
     });
     displayList(allAnimals);
-    // TODO: This might not be the function we want to call first
 }
 
 function preapareObject(jsonObject) {
@@ -79,15 +84,12 @@ function displayList(animals) {
 }
 
 function displayAnimal(animal) {
-    // create clone
     const clone = document.querySelector("template#animal").content.cloneNode(true);
 
-    // set clone data
     clone.querySelector("[data-field=name]").textContent = animal.name;
     clone.querySelector("[data-field=desc]").textContent = animal.desc;
     clone.querySelector("[data-field=type]").textContent = animal.type;
     clone.querySelector("[data-field=age]").textContent = animal.age;
 
-    // append clone to list
     document.querySelector("#list tbody").appendChild(clone);
 }
