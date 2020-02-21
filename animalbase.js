@@ -46,13 +46,23 @@ function prepareObjects(jsonData) {
     };
   });
 
+  let counter = 0;
+  let clicked = true;
+
   HTML.sortInputsValues.forEach(sortValue => {
     sortValue.onclick = function() {
+      if (clicked === true) {
+        clicked = false;
+        counter = 1;
+      } else if (clicked === false) {
+        clicked = true;
+        counter = -1;
+      }
+
       const clickedSortValue = sortValue.dataset.sort;
       allAnimals.sort((a, b) => {
         let c;
         let d;
-
         if (typeof a[clickedSortValue] === "number") {
           c = a[clickedSortValue];
           d = b[clickedSortValue];
@@ -60,8 +70,8 @@ function prepareObjects(jsonData) {
           c = a[clickedSortValue].toLowerCase();
           d = b[clickedSortValue].toLowerCase();
         }
-        if (c < d) return 1;
-        if (c > d) return -1;
+        if (c < d) return 1 * counter;
+        if (c > d) return -1 * counter;
         if (c === d) return 0;
       });
       displayList(allAnimals);
