@@ -35,24 +35,20 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
   allAnimals = jsonData.map(preapareObject);
 
-  //   HTML.filtersInputs.forEach(filterValue => {
-  //     const clickedSort = filterValue.dataset.filter.toLowerCase();
-  //     filterValue.onclick = function() {
-  //       if (clickedSort === "*") {
-  //         displayList(allAnimals);
-  //       } else {
-  //         const filteredAnimals = allAnimals.filter(
-  //           animal => animal.type === clickedSort
-  //         );
-  //         displayList(filteredAnimals);
-  //       }
-  //     };
-  //   });
+  HTML.filtersInputs.forEach(filterValue => {
+    const clickedFilterValue = filterValue.dataset.filter.toLowerCase();
+    console.log(clickedFilterValue);
+    filterValue.onclick = function() {
+      const filteredAnimals = allAnimals.filter(animal =>
+        filterAnimals(animal, clickedFilterValue)
+      );
+      displayList(filteredAnimals);
+    };
+  });
 
   HTML.sortInputsValues.forEach(sortValue => {
     sortValue.onclick = function() {
       const clickedSortValue = sortValue.dataset.sort;
-      console.log(parseInt(clickedSortValue, 10));
       allAnimals.sort((a, b) => {
         const c = a[clickedSortValue];
         const d = b[clickedSortValue];
@@ -60,12 +56,17 @@ function prepareObjects(jsonData) {
         if (c > d) return 1;
         if (c === d) return 0;
       });
-
       displayList(allAnimals);
     };
   });
 
   displayList(allAnimals);
+}
+
+function filterAnimals(animal, clickedFilterValue) {
+  console.log(animal);
+  if (clickedFilterValue === "*") return animal;
+  else if (animal.type === clickedFilterValue) return animal;
 }
 
 function preapareObject(jsonObject) {
