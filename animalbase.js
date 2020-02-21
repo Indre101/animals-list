@@ -50,8 +50,8 @@ function prepareObjects(jsonData) {
     sortValue.onclick = function() {
       const clickedSortValue = sortValue.dataset.sort;
       allAnimals.sort((a, b) => {
-        const c = a[clickedSortValue];
-        const d = b[clickedSortValue];
+        const c = a[clickedSortValue].toLowerCase();
+        const d = b[clickedSortValue].toLowerCase();
         if (c < d) return -1;
         if (c > d) return 1;
         if (c === d) return 0;
