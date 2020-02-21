@@ -50,10 +50,18 @@ function prepareObjects(jsonData) {
     sortValue.onclick = function() {
       const clickedSortValue = sortValue.dataset.sort;
       allAnimals.sort((a, b) => {
-        const c = a[clickedSortValue].toLowerCase();
-        const d = b[clickedSortValue].toLowerCase();
-        if (c < d) return -1;
-        if (c > d) return 1;
+        let c;
+        let d;
+
+        if (typeof a[clickedSortValue] === "number") {
+          c = a[clickedSortValue];
+          d = b[clickedSortValue];
+        } else {
+          c = a[clickedSortValue].toLowerCase();
+          d = b[clickedSortValue].toLowerCase();
+        }
+        if (c < d) return 1;
+        if (c > d) return -1;
         if (c === d) return 0;
       });
       displayList(allAnimals);
@@ -64,7 +72,6 @@ function prepareObjects(jsonData) {
 }
 
 function filterAnimals(animal, clickedFilterValue) {
-  console.log(animal);
   if (clickedFilterValue === "*") return animal;
   else if (animal.type === clickedFilterValue) return animal;
 }
